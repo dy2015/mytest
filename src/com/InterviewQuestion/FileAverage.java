@@ -17,12 +17,14 @@ public class FileAverage {
 	private static long[] initArray = { 5, 30, 78, 34, 50, 88, 66, 67 };// 被分组的文件
 	private static long sum = 0;// 文件大小总和
 	private static long min = 999999999;// 最小绝对值
+	private static long tempmin = 999999999;// 最小绝对值
 	private static long avg = 0;// 平均值
 	private static boolean flag = false;
 	private static int resultIndex = 0;
 	private static int minIndex = 0;// 分组结果中第一列，列数最大且不为-1的下标
 	private static List<Integer> list = new ArrayList<>();// 临时记录分组的下标
 	private static List<Integer> listbak = new ArrayList<>();// 临时记录分组的下标
+	private static List<Integer> templistbak = new ArrayList<>();// 临时记录分组的下标
 	static {
 		for (int i = 0; i < initArray.length; i++) {
 			sum += initArray[i];
@@ -59,11 +61,16 @@ public class FileAverage {
 				long temp = 0;
 				long linshi = 0;
 				for (int h = minIndex; h >= 0; h--) {
+					for(int t=initArray.length-1;t>=0;t--){
+						if(initArray[t]!=-2){
+							tempmin=initArray[t];
+							break;
+						}
+					}
 					index = 0;
 					temp = 0;
 					linshi = 0;
-					minIndex = h;
-					minAbs(index, temp, linshi);
+					minAbs(h, index, temp, linshi);
 				}
 				break;
 			}
@@ -76,17 +83,15 @@ public class FileAverage {
 		} // end--for
 	}
 
-	private static void minAbs(int index, long temp, long linshi) {
+	private static void minAbs(int start, int index, long temp, long linshi) {
 
-		for (int i = minIndex; i >= 0; i--) {
-			if (minIndex + 1 < initArray.length - 1) {
-				if (initArray[minIndex + 1] == -1) {
-					initArray[minIndex + 1] = linshi;
-					continue;
+		for (int i = start; i >= 0; i--) {
+			if (i + 1 < initArray.length - 1) {
+				if (initArray[i + 1] == -1) {
+					initArray[i + 1] = linshi;
 				}
 				if (initArray[i] == -1) {
 					initArray[i] = linshi;
-					continue;
 				}
 				if (initArray[i] == -2) {
 					continue;
@@ -118,20 +123,39 @@ public class FileAverage {
 					}
 				}
 				if (flag) {
+
 					flag = false;
 					temp -= initArray[i];
 					linshi = initArray[i];
 					initArray[i] = -1;
-					minIndex -= 1;
-					listbak.add(i);
-					list.removeAll(listbak);
+					// minIndex -= 1;
+					templistbak.clear();
 					listbak.clear();
-					minAbs(index, temp, linshi);
+					templistbak.add(i);
+					listbak.addAll(list);
+					list.removeAll(templistbak);
+					
+					i--;
+					// if(tempmin!=min){
+					
+					// }else{
+					// tempmin=
+					// }
+					tempmin = min;
+					minAbs(i, index, temp, linshi);
 					break;
 				}
-			} else {
-				minIndex -= 1;
-			} // end--if
+			}
+			 else {
+			// minIndex -= 1;
+				 if (Math.abs(temp - avg) > Math.abs(min - avg)) {
+					 list.clear();
+					 list.addAll(listbak);
+				 }else{
+					listbak.clear();
+					listbak.addAll(list);
+				 }
+			 } // end--if
 
 		} // end--for
 		if (list.size() > 0) {
@@ -142,8 +166,11 @@ public class FileAverage {
 			resultIndex++;
 			index = 0;
 			temp = 0;
-			min=999999999;
+			min = 999999999;
+			
+			initArray[0] = linshi;
 			list.clear();
+			
 		}
 	}
 
