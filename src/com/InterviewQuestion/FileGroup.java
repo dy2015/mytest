@@ -76,7 +76,7 @@ public class FileGroup {
 		long minAvg = avgArray[1];
 		n = 2;
 		for (int i = 2; i < avgArray.length; i++) {
-			if (minAvg > avgArray[i]) {
+			if (minAvg >= avgArray[i]) {//如果当绝对值平均值一样的时候，要求分组最少，就可以不取等于的情况。否则，加上等于。
 				minAvg = avgArray[i];
 				n = i + 1;
 			}

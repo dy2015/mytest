@@ -196,10 +196,10 @@ public class FileAverage {
 	}
 	
 	public static void main(String[] args) {
-		long[] array = { 5, 30, 78, 34, 50, 88, 66, 67};//被分组的文件
+//		long[] array = { 5, 30, 78, 34, 50, 88, 66, 67};//被分组的文件
 //		long[] array = { 1, 2, 3, 4, 5, 10 };// 被分组的文件
 //		long[] array = { 1, 2, 2, 50, 100, 1000 };// 被分组的文件
-
+		long[] array = { 1, 1, 1, 1, 1, 1, 2, 5, 1, 2, 1 };// 被分组的文件
 		averageFile(array,3);
 
 		System.out.println("分组结果:");
