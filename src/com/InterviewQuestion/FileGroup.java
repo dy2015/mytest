@@ -12,13 +12,13 @@ import java.util.Map;
 public class FileGroup {
 	public static Map<Integer, long[][]> map;
 	private static int n;// 最佳分组数
-	private static long[] avgArray;// 记录不同组数下平均值avg
+	private static double[] avgArray;// 记录不同组数下平均值avg
 	private static boolean mark;// 对于分组结果第一列有-1发生，说明被分文件数已经分组完毕，此时不应该再求该分组数下的绝对值。
 
 	private static void init(long[] array) {
 		n = 0;
 		mark = false;
-		avgArray = new long[array.length];
+		avgArray = new double[array.length];
 		for (int i = 0; i < array.length; i++) {// 找最小的绝对值，因此初始值取最大
 			avgArray[i] = FileAverage.MAXNUMBER;
 		}
@@ -66,14 +66,14 @@ public class FileGroup {
 			}
 			avgSum += Math.abs(count - avg);
 		} // end--for
-		avgArray[number - 1] = (long) (avgSum / (double) number);
+		avgArray[number - 1] = avgSum / (double) number;
 	}
 
 	/**
 	 * 思路： 基于数组avgArray，找出最佳分组数n。
 	 */
 	private static int findMinAvg() {
-		long minAvg = avgArray[1];
+		double minAvg = avgArray[1];
 		n = 2;
 		for (int i = 2; i < avgArray.length; i++) {
 			if (minAvg >= avgArray[i]) {//如果当绝对值平均值一样的时候，要求分组最少，就可以不取等于的情况。否则，加上等于。
