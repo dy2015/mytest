@@ -54,7 +54,7 @@ public class FileGroup {
 	 * @param number
 	 *            分组数
 	 */
-	private static void computeEveryAvg(long[][] resultArray, long avg, int number) {
+	private static void computeEveryAvg(long[][] resultArray, double avg, int number) {
 		long avgSum = 0;// 每组平均值相加之和
 		for (int i = 0; i < resultArray.length; i++) {
 			long count = 0;

@@ -1,6 +1,6 @@
 package com.InterviewQuestion;
 
-import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.Random;
 
@@ -37,20 +37,22 @@ public class TestFileGroup {
 		for (int i = 0; i < array.length; i++) {
 			System.out.print(array[i] + " ");
 		}
-		System.out.println();
+		System.out.println("(原始数据之和 = " + sum + ")");
 		System.out.println("分组所用时间 = " + (new Date().getTime() - date.getTime()) + " 毫秒");
 		System.out.println("最佳分组结果:共 " + resultArray.length + " 组");
 		for (int i = 0; i < resultArray.length; i++) {
 			long count = 0;
-			long avg = 0;
+			double avg = 0;
 			for (int j = 0; j < resultArray[i].length; j++) {
 				if (resultArray[i][j] != -1) {
 					count += resultArray[i][j];
 					System.out.print(resultArray[i][j] + " ");
 				}
 			}
-			avg = Long.valueOf(new BigDecimal(String.valueOf(sum / (double) n)).setScale(0, BigDecimal.ROUND_HALF_UP).toString());
-			System.out.println("------>" + count + "(和)," + avg + "(平均值),和与平均值相差的绝对值 = " + Math.abs(count - avg));
+			avg = sum / (double) n;
+			DecimalFormat df = new DecimalFormat("0.00");
+			avg = Double.valueOf(df.format(avg));
+			System.out.println("------>" + count + "(和)," + avg + "(平均值),和与平均值相差的绝对值 = " + df.format(Math.abs(count - avg)));
 		} // end--for
 	}
 

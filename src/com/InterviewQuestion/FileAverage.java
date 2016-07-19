@@ -1,19 +1,22 @@
 package com.InterviewQuestion;
 
-import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import com.QuickSort;
 
 /**
- * 分组思路： 1、求得平均值 avg = sum/n (四舍五入)。 2、从右到左，依次与平均值 avg进行比较，数本身大于或者多个数相加之和等于
- * 平均值avg,则分为一组。 3、将（剩下的数本身或者剩下的某几个数相加之和）与平均值avg之差的绝对值最小的，分为一组。
- * 4、将被分的数的位置置为-2。同时，剩下未被分组的数为一组。 5、分组结果全部存到resultArray数组中。
+ * 分组思路： 
+ * 1、求得平均值 avg = sum/n (四舍五入)。 
+ * 2、从右到左，依次与平均值 avg进行比较，数本身大于或者多个数相加之和等于平均值avg,则分为一组。 
+ * 3、将（剩下的数本身或者剩下的某几个数相加之和）与平均值avg之差的绝对值最小的，分为一组。
+ * 4、将被分的数的位置置为-2。同时，剩下未被分组的数为一组。
+ * 5、分组结果全部存到resultArray数组中。
  */
 public class FileAverage {
 	public static final long MAXNUMBER = 999999999;// 初始化一个最大的数，用于判断分租之和与平均值的绝对值的最小值
 	public static long[][] resultArray;// 分组结果
-	public static long avg ;// 平均值
+	public static double avg ;// 平均值
 	private static long sum;// 文件大小总和
 	private static long[] initArray;// 被分组的文件
 	private static int num;// 统计已被分组的个数
@@ -53,7 +56,8 @@ public class FileAverage {
 		for (int i = 0; i < initArray.length; i++) {//计算所有值之和
 			sum += initArray[i];
 		}
-		avg = Long.valueOf(new BigDecimal(String.valueOf(sum / (double) n)).setScale(0, BigDecimal.ROUND_HALF_UP).toString());
+		avg = sum / (double) n;
+		avg = Double.valueOf(new DecimalFormat("0.00").format(avg));
 		list.clear();// 清空记录的下标值
 		listbak.clear();// 清空记录的下标值
 	}
@@ -154,11 +158,9 @@ public class FileAverage {
 							list.addAll(listbak);
 						}
 					} else {
-						
 						list.removeAll(templistbak);
 						listbak.clear();
 						listbak.addAll(list);
-						
 					}
 					i--;
 					tempmin = min;
@@ -272,7 +274,7 @@ public class FileAverage {
 		} // end--for
 	}
 	public static void main(String[] args) {
-//		long[] array = { 5, 30, 78, 34, 50, 88, 66, 67};//被分组的文件
+		long[] array = { 5, 30, 78, 34, 50, 88, 66, 67};//被分组的文件
 //		long[] array = { 1, 2, 3, 4, 5, 10 };// 被分组的文件
 //		long[] array = { 1, 2, 2, 50, 100, 1000 };// 被分组的文件
 //		long[] array = { 1, 1, 1, 1, 1, 1, 2, 5, 1, 2, 1 };// 被分组的文件
@@ -281,8 +283,8 @@ public class FileAverage {
 //		long[] array = { 11, 11, 11, 1 };// 被分组的文件
 //		long[] array = { 11, 11, 11, 1,1,1,1 };// 被分组的文件
 //		long[] array = { 1, 5, 6, 7, 11, 18, 23, 45, 98, 150, 160 };// 被分组的文件
-		long[] array = { 2, 2, 6, 10, 18, 39, 45, 48 };// 被分组的文件
-		averageFile(array,2);
+//		long[] array = { 2, 2, 6, 10, 18, 39, 45, 48 };// 被分组的文件
+		averageFile(array,3);
 		for (int i = 0; i < resultArray.length; i++) {
 			long count = 0;
 			for (int j = 0; j < resultArray[i].length; j++) {
