@@ -59,7 +59,7 @@ public class FileGroup {
 		for (int i = 0; i < resultArray.length; i++) {
 			long count = 0;
 			for (int j = 0; j < resultArray[i].length; j++) {// 统计每一组的和
-				if(resultArray[i][j]==0){
+				if(resultArray[i][j]==-1){
 					break;
 				}
 				count += resultArray[i][j];
@@ -76,7 +76,7 @@ public class FileGroup {
 		double minAvg = avgArray[1];
 		n = 2;
 		for (int i = 2; i < avgArray.length; i++) {
-			if (minAvg >= avgArray[i]) {//如果当绝对值平均值一样的时候，要求分组最少，就可以不取等于的情况。否则，加上等于。
+			if (minAvg > avgArray[i]) {//如果当绝对值平均值一样的时候，要求分组最少，就可以不取等于的情况。否则，加上等于。
 				minAvg = avgArray[i];
 				n = i + 1;
 			}
