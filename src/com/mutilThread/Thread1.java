@@ -7,9 +7,9 @@ public class Thread1 implements Runnable {
 		long start=System.currentTimeMillis();
 		int i = 0;
 		while (i < Common.MAX) {
-			//Common.getResult();
+			Common.getResult();
 			System.out.println(Common.count2.get()+"当前值");
-			System.out.println(Common.count2.addAndGet(100)+"与100相加,返回的是更新的值！");
+//			System.out.println(Common.count2.addAndGet(100)+"与100相加,返回的是更新的值！");
 			Common.count2.incrementAndGet();
 			// System.out.println(Thread.currentThread().getName() +
 			// "在运行......！");

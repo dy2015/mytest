@@ -19,11 +19,13 @@ public class TestFileGroup {
 		// long[] array = { 1111, 1111, 1111, 1111, 1111, 555, 1 };// 被分组的文件
 		// long[] array = { 11, 11, 11, 1 };// 被分组的文件
 		// long[] array = { 11, 11, 11, 1,1,1,1 };// 被分组的文件
-		long[] array = new long[8];
-		Random rand = new Random();
-		for (int i = 0; i < array.length; i++) {
-			array[i] = rand.nextInt(100);
-		}
+		long[] array = { 1, 2, 2, 50, 100, 1000 };// 被分组的文件
+//		long[] array = { 1, 2, 3, 4, 8, 10,11 };// 被分组的文件
+//		long[] array = new long[8];
+//		Random rand = new Random();
+//		for (int i = 0; i < array.length; i++) {
+//			array[i] = rand.nextInt(100);
+//		}
 		int n = 0;// 分组数
 		long[][] resultArray;// 分组结果
 		long sum = 0;// 文件大小总和

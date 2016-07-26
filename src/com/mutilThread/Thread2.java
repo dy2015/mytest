@@ -7,7 +7,7 @@ public class Thread2 implements Runnable{
 		long start=System.currentTimeMillis();
 		int i = 0;
 		while (i < Common.MAX) {
-//			Common.getResult();
+			Common.getResult();
 			Common.count2.incrementAndGet();
 			//System.out.println(Thread.currentThread().getName() + "在运行......！");
 			i++;
