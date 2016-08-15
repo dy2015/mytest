@@ -1,6 +1,7 @@
 package com;
 
 public class GetIP {
+	
 	public static long getIPLong(String ip) {
 		long iplong = 0;
 		String[] ipArray = ip.split("\\.");
