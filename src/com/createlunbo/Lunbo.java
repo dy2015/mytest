@@ -63,80 +63,82 @@ public class Lunbo {
 	/**
 	 * 轮播序列,优先级从高到低。
 	 */
-	public static String[][] LunboSeqRule(int[][] lunboDataback) {
-		int[][] lunboData = new int[lunboDataback.length][3];// 用于打印.正式算法，就可以去掉
+//	public static String[][] LunboSeqRule(int[][] lunboDataback) {
+		
+	public static Map<String, int[]> LunboSeqRule(Map<String, List<int[]>> posCaroNum) {
+		Map<String, int[]> resultPosCaroNum = new HashMap<>();
+		for (String pos : posCaroNum.keySet()) {
+			List<int[]> lunboDataback = posCaroNum.get(pos);
+			int[][] lunboData = new int[lunboDataback.size()][3];
+			for (int i = 0; i < lunboData.length; i++) {
+				lunboData[i][0] = lunboDataback.get(i)[0];
+				lunboData[i][1] = lunboDataback.get(i)[1];
+				lunboData[i][2] = lunboDataback.get(i)[2];
+			}
 
-		for (int i = 0; i < lunboData.length; i++) {
-			lunboData[i][0] = lunboDataback[i][0];
-			lunboData[i][1] = lunboDataback[i][1];
-			lunboData[i][2] = lunboDataback[i][2];
-		}
-		int sum = 0;// 循环次数
-		int len = lunboData.length;
-//		Map<Integer, List<Integer>> castSeq = new HashMap<Integer, List<Integer>>(len);// 投放id--》轮播序列
+			int sum = 0;// 循环次数
+			int len = lunboData.length;
 
-		// 将传过来的(轮数/总轮数)化简
-		for (int i = 0; i < len; i++) {
-			int gongyueshu = commonDiv(lunboData[i][0], lunboData[i][1]);
-			lunboData[i][0] /= gongyueshu;
-			lunboData[i][1] /= gongyueshu;
-		}
-		int[] fenmu = new int[len];
-		for (int i = 0; i < len; i++) {
-			fenmu[i] = lunboData[i][1];
-		}
-		int gongbeishu = nCommonMul(fenmu, len);// 该广告位总轮播最小公倍数
-		String[][] castSe=new String[len][gongbeishu];// 投放id--》轮播序列
-		int[] result = new int[gongbeishu];// 最终的轮播序列
-		sortRule(lunboData, gongbeishu);
-		StringBuilder seqString=new StringBuilder(gongbeishu);
-		for (int i = 0; i < len && lunboData[i][0] > 0; i++) {
-//			int size = lunboData[i][1];
-			seqString.delete(0, seqString.length());
-//			List<Integer> listSeq = new ArrayList<Integer>(size);
-			for (int j = 0; j < gongbeishu; j += lunboData[i][1]) {
-				int num = 0;
-				int index2 = j;
-				int index1 = 0;
-				for (int v = j; v < j + lunboData[i][1]; v++, index1++) {
-					if (result[v] != 0) {
-						continue;
-					} else {
-						sum++;
-						if (index1 == 0 || (lunboData[i][2] != result[v - 1] && num < lunboData[i][0])) {
-							result[v] = lunboData[i][2];
-//							listSeq.add(v + 1);
-							seqString.append(v+1).append(",");
-							num++;
+			// 将传过来的(轮数/总轮数)化简
+			for (int i = 0; i < len; i++) {
+				int gongyueshu = commonDiv(lunboData[i][0], lunboData[i][1]);
+				lunboData[i][0] /= gongyueshu;
+				lunboData[i][1] /= gongyueshu;
+			}
+			int[] fenmu = new int[len];
+			for (int i = 0; i < len; i++) {
+				fenmu[i] = lunboData[i][1];
+			}
+			int gongbeishu = nCommonMul(fenmu, len);// 该广告位总轮播最小公倍数
+			String[][] castSeq = new String[len][gongbeishu];// 投放id--》轮播序列
+			int[] result = new int[gongbeishu];// 最终的轮播序列
+			sortRule(lunboData, gongbeishu);
+			StringBuilder seqString = new StringBuilder(gongbeishu);
+			for (int i = 0; i < len && lunboData[i][0] > 0; i++) {
+				seqString.delete(0, seqString.length());
+				for (int j = 0; j < gongbeishu; j += lunboData[i][1]) {
+					int num = 0;
+					int index2 = j;
+					int index1 = 0;
+					for (int v = j; v < j + lunboData[i][1]; v++, index1++) {
+						if (result[v] != 0) {
+							continue;
 						} else {
-							if (result[v] == 0 && result[index2] != 0) {
-								index2 = v;
+							sum++;
+							if (index1 == 0 || (lunboData[i][2] != result[v - 1] && num < lunboData[i][0])) {
+								result[v] = lunboData[i][2];
+								seqString.append(v + 1).append(",");
+								num++;
+							} else {
+								if (result[v] == 0 && result[index2] != 0) {
+									index2 = v;
+								}
+							}
+						}
+					} // end--for
+					if (num < lunboData[i][0]) {
+						for (int t = index2; t < j + lunboData[i][1]; t++) {
+							if (result[t] == 0) {
+								result[t] = lunboData[i][2];
+								seqString.append(t + 1).append(",");
+								num++;
+							}
+							if (num >= lunboData[i][0]) {
+								break;
 							}
 						}
 					}
 				} // end--for
-				if (num < lunboData[i][0]) {
-					for (int t = index2; t < j + lunboData[i][1]; t++) {
-						if (result[t] == 0) {
-							result[t] = lunboData[i][2];
-//							listSeq.add(t + 1);
-							seqString.append(t+1).append(",");
-							num++;
-						}
-						if (num >= lunboData[i][0]) {
-							break;
-						}
-					}
-				}
+				castSeq[i][0] = String.valueOf(lunboData[i][2]);
+				String temp = seqString.toString();
+				temp = temp.substring(0, seqString.length() - 1);
+				castSeq[i][1] = temp;
 			} // end--for
-//			castSeq.put(lunboData[i][2], listSeq);
-			castSe[i][0]=String.valueOf(lunboData[i][2]);
-			String temp=seqString.toString();
-			temp=temp.substring(0, seqString.length()-1);
-			castSe[i][1]=temp;
-		} // end--for
-//		 System.out.println("共循环:" + sum + "次");
-		return castSe;
+			// System.out.println("共循环:" + sum + "次");
+			resultPosCaroNum.put(pos, result);
+		}
+
+		return resultPosCaroNum;
 	}
 
 	/**
@@ -225,15 +227,47 @@ public class Lunbo {
 //		 int[][] lunboData = { { 3, 4 ,111}, { 2, 3, 222 } };// 每个投放对应的轮数和总轮数
 //		 int[][] lunboData = { { 3, 7 ,111}, { 4, 7 , 222} };// 每个投放对应的轮数和总轮数
 //		 int[][] lunboData = { { 21, 100 ,111}, { 11, 60, 222 }, { 13, 60,333}, { 7, 60,444 }, { 8, 60 ,555} };// 每个投放对应的轮数和总轮数
-		
-		String[][]  castSeq = null;// 最终的投放ID对应的投放序列
+		Map<String, List<int[]>> posCaroNum=new HashMap<>();
+		List<int[]> init1=new ArrayList<>();
+		init1.add(new int[]{ 3, 7, 111 });
+		init1.add(new int[]{ 1, 7, 222 });
+		init1.add(new int[]{ 2, 7, 333 });
+		init1.add(new int[]{ 2, 21, 444 });
+		init1.add(new int[]{ 1, 21, 555 });
+		posCaroNum.put("1", init1);
+		List<int[]> init2=new ArrayList<>();
+		init2.add(new int[] { 3, 5 ,111});
+		init2.add(new int[]{ 1, 3 , 222});
+		init2.add(new int[]{ 1, 15,333 });
+		posCaroNum.put("2", init2);
+		Map<String, int[]>  castSeq = null;// 最终的投放ID对应的投放序列
 		double start = System.currentTimeMillis();
 		for (int i = 0; i < 1000; i++) {
-			castSeq = LunboSeqRule(lunboData);
+			castSeq = LunboSeqRule(posCaroNum);
 		}
 		System.out.println("算法耗时：" + (System.currentTimeMillis() - start) + "毫秒");
-
+		
 		// 以下是按[A,B,A,C,A,B,B,C]格式打印，便于验证算法有效性，不属于算法内容。
-		print(castSeq, lunboData);
+		
+		
+		
+		for (String pos : castSeq.keySet()) {
+			System.out.print("广告位("+pos+"):");
+			int len = posCaroNum.get(pos).size() - 1;
+			for (int i = 0; i < len; i++) {
+				System.out.print(posCaroNum.get(pos).get(i)[2]+ "出现" + posCaroNum.get(pos).get(i)[0] + "/" + posCaroNum.get(pos).get(i)[1] + "次；");
+			}
+			System.out.println(posCaroNum.get(pos).get(len)[2] + "出现" + posCaroNum.get(pos).get(len)[0] + "/" + posCaroNum.get(pos).get(len)[1] + "次。");
+			int[] seq=castSeq.get(pos);
+			for(int i=0;i<seq.length-1;i++){
+				System.out.print(seq[i]+",");
+			}
+			System.out.print(seq[seq.length-1]);
+			System.out.println();
+			System.out.println();
+		}
+				
+//		print(castSeq, lunboData);
+		
 	}
 }
