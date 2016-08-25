@@ -205,6 +205,15 @@ public class Lunbo {
 		init3.add(new int[] { 4, 15, 333 });
 		init3.add(new int[] { 1, 10, 4444 });
 		posCaroNum.put("3", init3);
+		
+		List<int[]> init4 = new ArrayList<>();
+		init4.add(new int[] { 5, 21, 111 });
+		init4.add(new int[] { 3, 14, 222 });
+		init4.add(new int[] { 4, 21, 333 });
+		init4.add(new int[] { 1, 6, 4444 });
+		init4.add(new int[] { 1, 7, 5555 });
+		init4.add(new int[] { 1, 21, 6666 });
+		posCaroNum.put("4", init4);
 
 		Map<String, int[]> castSeq = null;// 最终的投放ID对应的投放序列
 		double start = System.currentTimeMillis();
