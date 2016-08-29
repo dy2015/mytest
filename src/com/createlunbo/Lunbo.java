@@ -114,171 +114,6 @@ public class Lunbo {
 		} // end--for
 	}
 
-	/**
-	 * 轮播序列,优先级从高到低。
-	 */
-//	public static Map<String, int[]> LunboSeqRule(Map<String, List<int[]>> posCaroNum) {
-//		Map<String, int[]> resultPosCaroNum = new HashMap<>();
-//		for (String pos : posCaroNum.keySet()) {
-//			List<int[]> lunboDataback = posCaroNum.get(pos);
-//			if (lunboDataback == null || lunboDataback.size() <= 0) {
-//				continue;
-//			}
-//			int[][] lunboData = new int[lunboDataback.size()][3];
-//			for (int i = 0; i < lunboData.length; i++) {
-//				lunboData[i][0] = lunboDataback.get(i)[0];
-//				lunboData[i][1] = lunboDataback.get(i)[1];
-//				lunboData[i][2] = lunboDataback.get(i)[2];
-//			}
-//
-//			int sum = 0;// 循环次数
-//			int dataLen = lunboData.length;
-//			// 将传过来的(轮数/总轮数)化简
-//			toSimple(lunboData);
-//			int[] fenmu = new int[dataLen];
-//			for (int i = 0; i < dataLen; i++) {
-//				fenmu[i] = lunboData[i][1];
-//			}
-//			int gongbeishu = nCommonMul(fenmu, dataLen);// 该广告位总轮播最小公倍数
-//			// System.out.println("公倍数：" + gongbeishu);
-//			int seqLength = gongbeishu;
-//			int resultlength = seqLength;
-//			if (seqLength == 1) {
-//				seqLength = lunboDataback.get(0)[1];
-//				resultlength = seqLength;
-//				if (seqLength == 1) {
-//					seqLength++;
-//				}
-//			}
-//			String[][] castSeq = new String[dataLen][seqLength];// 投放id--》轮播序列
-//			int[] result = new int[resultlength];// 最终的轮播序列
-//			sortRule(lunboData, gongbeishu);
-//
-//			int[] index = new int[dataLen];// 存放每只广告循环一次大周期后，处在的位置下标，下一次从该位置循环
-//			StringBuilder seqString = new StringBuilder(gongbeishu);
-//			int cycle = 0;
-//			int zeroNum = 0;
-//			/**
-//			 * 按周期最大的为间隔，先满足每个大周期内包含的小周期的要求， 对于某些跨度到下一个大周期的小周期，先不管，到下一个大周期再做处理
-//			 */
-//			int len = lunboData[dataLen - 1][1];
-//			int j = 0;
-//			if (lunboData[0][0] == 1) {
-//				cycle = 0;
-//			} else {
-//				cycle = 1;
-//			}
-//			// int g=0;
-//			for (int g = 0; g < gongbeishu - len * 0; g += len) {
-//				zeroNum = 0;
-//				for (int i = 0; i < dataLen && lunboData[i][0] > 0; i++) {
-//					if (cycle % 2 == 0) {
-//						if (lunboData[i][0] == 1) {
-//							cycle = 0;
-//						} else {
-//							cycle = 1;
-//						}
-//					}
-//					if (lunboData[i][0] == 1) {// 遇到分子为1的时候，cycle++，奇数从前往后插，偶数从后往前插
-//						cycle++;
-//					}
-//					seqString.delete(0, seqString.length());
-//					j = index[i];
-//					for (; j + lunboData[i][1] <= len + g; j += lunboData[i][1]) {
-//						int num = 0;
-//						int index2 = j;
-//						int index1 = 0;
-//						// 奇数从前往后插
-//						if (cycle % 2 != 0) {
-//							for (int v = j; v < j + lunboData[i][1]; v++, index1++) {
-//								if (num >= lunboData[i][0]) {// 该周期内已经满足该支广告的序列个数要求
-//									break;
-//								}
-//								if (result[v] != 0) {
-//									continue;
-//								} else {
-//									sum++;
-//									if (index1 == 0 || (lunboData[i][2] != result[v - 1] && num < lunboData[i][0])) {
-//										result[v] = lunboData[i][2];
-//										seqString.append(v + 1).append(",");
-//										num++;
-//									} else {
-//										if (result[v] == 0 && result[index2] != 0) {
-//											index2 = v;
-//										}
-//									}
-//								}
-//							} // end--for
-//						} else {
-//							// 偶数从后往前插
-//							index1 = j + lunboData[i][1] - 1;
-//							for (int v = j + lunboData[i][1] - 1; v >= j; v--, index1--) {
-//								if (num >= lunboData[i][0]) {// 该周期内已经满足该支广告的序列个数要求
-//									break;
-//								}
-//								if (result[v] != 0) {
-//									continue;
-//								} else {
-//									sum++;
-//									if (index1 == j + lunboData[i][1] - 1 || (lunboData[i][2] != result[v - 1] && num < lunboData[i][0])) {
-//										result[v] = lunboData[i][2];
-//										seqString.append(v + 1).append(",");
-//										num++;
-//									} else {
-//										if (result[v] == 0 && result[index2] != 0) {
-//											index2 = v;
-//										}
-//									}
-//								}
-//							} // end--for
-//						}
-//						if (num < lunboData[i][0]) {
-//							for (int t = index2; t < j + lunboData[i][1]; t++) {
-//								if (result[t] == 0) {
-//									result[t] = lunboData[i][2];
-//									seqString.append(t + 1).append(",");
-//									num++;
-//								}
-//								if (num >= lunboData[i][0]) {
-//									break;
-//								}
-//							}
-//						}
-//					} // end--for
-//						// modifyCycle(result, index[i],
-//						// lunboData[i][1],j,lunboData[i][2]);
-//					index[i] = j;
-//					castSeq[i][0] = String.valueOf(lunboData[i][2]);
-//					String temp = seqString.toString();
-//					temp = temp.substring(0, seqString.length() - 1);
-//					castSeq[i][1] = temp;
-//				} // end--for
-//				for (int i = g; i < g + len; i++) {
-//					if (result[i] == 0) {
-//						zeroNum++;
-//						break;
-//					}
-//				}
-//				if (zeroNum != 0) {// 依次将最大周期位置从后往前调整到为0的位置上。
-//					// modifyMaxCycle(result, lunboData, index, g, len);
-//				}
-//
-//			} // end--for
-//				// System.out.println("共循环:" + sum + "次");
-//			if (gongbeishu == 1) {
-//				seqString.delete(0, seqString.length());
-//				seqString.append(castSeq[0][1]);
-//				for (int i = 1; i < result.length; i++) {
-//					seqString.append(",").append(i + 1);
-//					result[i] = result[0];
-//				}
-//				castSeq[0][1] = seqString.toString();
-//			}
-//			resultPosCaroNum.put(pos, result);
-//		}
-//		return resultPosCaroNum;
-//	}
-
 	public static void computeJiange(Map<Integer, int[]> datajiange, int gongbeishu, int[][] lunboData) {
 		for (int jiangei = 0; jiangei < lunboData.length; jiangei++) {
 			int jiangeNum = gongbeishu / lunboData[jiangei][1];
@@ -308,7 +143,6 @@ public class Lunbo {
 				lunboData[i][2] = lunboDataback.get(i)[2];
 			}
 
-//			int sum = 0;// 循环次数
 			int dataLen = lunboData.length;
 			// 将传过来的(轮数/总轮数)化简
 			toSimple(lunboData);
@@ -326,14 +160,12 @@ public class Lunbo {
 					seqLength++;
 				}
 			}
-//			String[][] castSeq = new String[dataLen][seqLength];// 投放id--》轮播序列
 			int[] result = new int[resultlength];// 最终的轮播序列
 			sortRule(lunboData, gongbeishu);
 			// 记录各个数的周期间隔记录下来
 			computeJiange(datajiange, gongbeishu, lunboData);
 
 			int[] index = new int[dataLen];// 存放每只广告循环一次大周期后，处在的位置下标，下一次从该位置循环
-//			StringBuilder seqString = new StringBuilder(gongbeishu);
 			int cycle = 0;
 			int zeroNum = 0;
 			/**
@@ -358,7 +190,6 @@ public class Lunbo {
 			} else {
 				cycle = 1;
 			}
-			// int g=0;
 			// 当有分数分母刚好等于公倍数的，先排除，按最大的分母为周期，执行下面的操作
 			for (int g = 0; g < gongbeishu - len * 0; g += len) {
 				zeroNum = 0;
@@ -373,7 +204,6 @@ public class Lunbo {
 					if (lunboData[cyclei][0] == 1) {// 遇到分子为1的时候，cycle++，奇数从前往后插，偶数从后往前插
 						cycle++;
 					}
-//					seqString.delete(0, seqString.length());
 					j = index[cyclei];
 					for (; j + lunboData[cyclei][1] <= len + g; j += lunboData[cyclei][1]) {
 						int num = 0;
@@ -388,10 +218,8 @@ public class Lunbo {
 								if (result[v] != 0) {
 									continue;
 								} else {
-//									sum++;
 									if (index1 == 0 || (lunboData[cyclei][2] != result[v - 1] && num < lunboData[cyclei][0])) {
 										result[v] = lunboData[cyclei][2];
-//										seqString.append(v + 1).append(",");
 										num++;
 									} else {
 										if (result[v] == 0 && result[index2] != 0) {
@@ -410,10 +238,8 @@ public class Lunbo {
 								if (result[v] != 0) {
 									continue;
 								} else {
-//									sum++;
 									if (index1 == j + lunboData[cyclei][1] - 1 || (lunboData[cyclei][2] != result[v - 1] && num < lunboData[cyclei][0])) {
 										result[v] = lunboData[cyclei][2];
-//										seqString.append(v + 1).append(",");
 										num++;
 									} else {
 										if (result[v] == 0 && result[index2] != 0) {
@@ -427,7 +253,6 @@ public class Lunbo {
 							for (int t = index2; t < j + lunboData[cyclei][1]; t++) {
 								if (result[t] == 0) {
 									result[t] = lunboData[cyclei][2];
-//									seqString.append(t + 1).append(",");
 									num++;
 								}
 								if (num >= lunboData[cyclei][0]) {
@@ -462,12 +287,10 @@ public class Lunbo {
 									}
 								}
 								endlunData[yidong] = end;
-								buNum = moveData(result, end, buNum, countThisLunData, lunboData[yidong][1], lunboData[yidong][2], lunboData[cyclei][2]);
+								buNum = moveData(result, end, buNum, countThisLunData, lunboData[yidong][1], lunboData[yidong][2], lunboData[cyclei][2],-1);
 
 								if (buNum < countThisLunData) {
-
 									end += lunboData[yidong][1];
-
 									if (end != j + lunboData[cyclei][1]) {
 										for (;; end += lunboData[yidong][1]) {
 											if (end > j + lunboData[cyclei][1]) {
@@ -477,16 +300,16 @@ public class Lunbo {
 										}
 										if (endlunData[yidong] < end) {
 											endlunData[yidong] = end;
-											//此处需要判断一下，该数在该周期内第一次出现的位置是否在插入不足数据的周期间隔之前，是才移动，否不移动
-											boolean firstIndex=false;
-											for(int firsti=end;firsti<j + lunboData[cyclei][1];firsti++){
-												if(result[firsti]==lunboData[yidong][2]){
-													firstIndex=true;
+											// 此处需要判断一下，该数在该周期内第一次出现的位置是否在插入不足数据的周期间隔之前，是才移动，否不移动
+											boolean firstIndex = false;
+											for (int firsti = end; firsti < j + lunboData[cyclei][1]; firsti++) {
+												if (result[firsti] == lunboData[yidong][2]) {
+													firstIndex = true;
 													break;
 												}
-											}//end--for
-											if(firstIndex){
-											buNum = moveData2(result, end, buNum, countThisLunData, lunboData[yidong][1], lunboData[yidong][2], lunboData[cyclei][2],j + lunboData[cyclei][1]);
+											} // end--for
+											if (firstIndex) {
+												buNum = moveData(result, end, buNum, countThisLunData, lunboData[yidong][1], lunboData[yidong][2], lunboData[cyclei][2], j + lunboData[cyclei][1]);
 											}
 										} // end--if
 									}
@@ -499,20 +322,16 @@ public class Lunbo {
 								end = endlunData[yidong] + lunboData[yidong][1];
 								endlunData[yidong] = end;
 								if (end < j + lunboData[cyclei][1]) {
-									buNum = moveData(result, end, buNum, countThisLunData, lunboData[yidong][1], lunboData[yidong][2], lunboData[cyclei][2]);
+									buNum = moveData(result, end, buNum, countThisLunData, lunboData[yidong][1], lunboData[yidong][2], lunboData[cyclei][2],-1);
 								}
 							} // end--for
 							if (buNum < countThisLunData) {
 								// 从该数前一个数，依次循环往后移动,为了降低算法复杂度，需要提前将各个数的周期间隔记录下来
-								cycleMoveData(result, datajiange, j + lunboData[cyclei][1], gongbeishu, countThisLunData, buNum, lunboData, cyclei,endlunData);
+								cycleMoveData(result, datajiange, j + lunboData[cyclei][1], gongbeishu, countThisLunData, buNum, lunboData, cyclei, endlunData);
 							}
 						} // end-if
 					} // end--for
 					index[cyclei] = j;
-//					castSeq[cyclei][0] = String.valueOf(lunboData[cyclei][2]);
-//					String temp = seqString.toString();
-//					temp = temp.substring(0, seqString.length() - 1);
-//					castSeq[cyclei][1] = temp;
 				} // end--for
 				for (int zeroi = g; zeroi < g + len; zeroi++) {
 					if (result[zeroi] == 0) {
@@ -540,22 +359,17 @@ public class Lunbo {
 					}
 				} // end--for
 			} // end--for
-				// System.out.println("共循环:" + sum + "次");
 			if (gongbeishu == 1) {
-//				seqString.delete(0, seqString.length());
-//				seqString.append(castSeq[0][1]);
 				for (int i = 1; i < result.length; i++) {
-//					seqString.append(",").append(i + 1);
 					result[i] = result[0];
 				}
-//				castSeq[0][1] = seqString.toString();
 			}
 			resultPosCaroNum.put(pos, result);
 		}
 		return resultPosCaroNum;
 	}
 
-	public static void cycleMoveData(int[] result, Map<Integer, int[]> datajiange, int start, int gongbeishu, int countThisLunData, int buNum, int[][] lunboData, int cycleIndex,int[] endlunData) {
+	public static void cycleMoveData(int[] result, Map<Integer, int[]> datajiange, int start, int gongbeishu, int countThisLunData, int buNum, int[][] lunboData, int cycleIndex, int[] endlunData) {
 		// 从插入个数不足的数据的下一个周期开始，到result数组结束，找到为0的数据的位置
 		int indexZero = 0;
 		for (int movei = result.length - 1; movei >= 0; movei--) {
@@ -565,8 +379,8 @@ public class Lunbo {
 		}
 		int orgin = indexZero;
 		for (int movei = cycleIndex; movei >= 0; movei--) {
-			if(movei>0){
-			endlunData[movei-1] -= lunboData[movei-1][1];
+			if (movei > 0) {
+				endlunData[movei - 1] -= lunboData[movei - 1][1];
 			}
 			if (buNum >= countThisLunData) {
 				break;
@@ -581,7 +395,7 @@ public class Lunbo {
 				}
 				if (jiangge[jiangeArray] >= indexZero && jiangge[jiangeArray - 1] < indexZero && jiangge[jiangeArray - 1] > start) {
 					// 将该数在该周期内，从前往后，将该数据移动到该周期末尾为零的位置
-					indexZero = moveData(result, jiangge[jiangeArray - 1], buNum, countThisLunData, lunboData[movei][1], lunboData[movei][2]);
+					indexZero = moveData(result, jiangge[jiangeArray - 1], buNum, countThisLunData, lunboData[movei][1], lunboData[movei][2], -1,-1);
 				}
 				if (orgin != indexZero) {
 					orgin = indexZero;
@@ -589,94 +403,136 @@ public class Lunbo {
 				}
 			} // end--for
 		} // end--for
-		//移动
+			// 移动
 		for (int yidong = cycleIndex - 1; yidong >= 0; yidong--) {// 前i-1个数
 			if (buNum >= countThisLunData) {
 				break;
 			}
-			if (endlunData[yidong]  < start) {
-				buNum = moveData(result, endlunData[yidong], buNum, countThisLunData, lunboData[yidong][1], lunboData[yidong][2], lunboData[cycleIndex][2]);
+			if (endlunData[yidong] < start) {
+				buNum = moveData(result, endlunData[yidong], buNum, countThisLunData, lunboData[yidong][1], lunboData[yidong][2], lunboData[cycleIndex][2],-1);
 			}
 		} // end--for
 	}
 
-	public static int moveData(int[] result, int start, int buNum, int countThisLunData, int fenmu, int castid) {
-		for (int movei = start, movej = start + fenmu - 1; movei < movej;) {
-			if (buNum >= countThisLunData) {
-				break;
-			}
-			if (result[movei] != castid) {
-				movei++;
-				continue;
-			}
-			if (result[movej] != 0) {
-				movej--;
-				continue;
-			}
-			if (result[movei] == castid) {
-				result[movej--] = result[movei];
-				result[movei++] = 0;
-				buNum++;
-			} else {
-				movei++;
-			}
-		} // end--for
+	// public static int moveData(int[] result, int start, int buNum, int
+	// countThisLunData, int fenmu, int castid) {
+	// for (int movei = start, movej = start + fenmu - 1; movei < movej;) {
+	// if (buNum >= countThisLunData) {
+	// break;
+	// }
+	// if (result[movei] != castid) {
+	// movei++;
+	// continue;
+	// }
+	// if (result[movej] != 0) {
+	// movej--;
+	// continue;
+	// }
+	// if (result[movei] == castid) {
+	// result[movej--] = result[movei];
+	// result[movei++] = 0;
+	// buNum++;
+	// } else {
+	// movei++;
+	// }
+	// } // end--for
+	// int zero = 0;
+	// for (int movei = start; movei < start + fenmu - 1; movei++) {
+	// if (result[movei] == 0) {
+	// zero = movei + 1;
+	// break;
+	// }
+	// }
+	// return zero;
+	// }
+
+	public static int moveData(int[] result, int end, int buNum, int countThisLunData, int fenmu, int castid, int replaceid, int endIndex) {
 		int zero = 0;
-		for (int movei = start; movei < start + fenmu - 1; movei++) {
-			if (result[movei] == 0) {
-				zero = movei + 1;
+		boolean tag=true;
+		for (int neibui = end, neibuj = end + fenmu - 1;;) {
+			if(tag==false){
 				break;
 			}
+			 tag=false;
+			if (endIndex==-1) {
+				if (neibui < neibuj) {
+					tag=true;
+				}
+			}else{
+				if ( neibui < endIndex && neibuj >= endIndex) {
+					tag=true;
+				}
+			}
+			if (tag) {
+				if (buNum >= countThisLunData) {
+					break;
+				}
+				if (replaceid != -1) {
+					if (result[neibui] == 0 || result[neibui] != castid) {
+						neibui++;
+						continue;
+					}
+				} else {
+					if (result[neibui] != castid) {
+						neibui++;
+						continue;
+					}
+				}
+				if (result[neibuj] != 0) {
+					neibuj--;
+					continue;
+				}
+				if (result[neibui] == castid) {
+					result[neibuj--] = result[neibui];
+					if (replaceid != -1) {// 表示该数的周期末尾值小于茶如数量不足的数据的周期末尾值，此时，则需要将该数在本周期内，从后往前填充，前面被移动的位置，由数量不足的数据填充
+						result[neibui++] = replaceid;
+					} else {// 循环移动
+						result[neibui++] = 0;
+					}
+					buNum++;
+				} else {
+					neibui++;
+				}
+			}
+		} // end--for
+
+		if (replaceid != -1) {
+			return buNum;
+		} else {
+			for (int movei = end; movei < end + fenmu - 1; movei++) {
+				if (result[movei] == 0) {
+					zero = movei + 1;
+					break;
+				}
+			}
+			return zero;
 		}
-		return zero;
 	}
 
-	public static int moveData(int[] result, int end, int buNum, int countThisLunData, int fenmu, int castid, int replaceid) {
-		for (int neibui = end, neibuj = end + fenmu - 1; neibui < neibuj;) {
-			if (buNum >= countThisLunData) {
-				break;
-			}
-			if (result[neibui] == 0 || result[neibui] != castid) {
-				neibui++;
-				continue;
-			}
-			if (result[neibuj] != 0) {
-				neibuj--;
-				continue;
-			}
-			if (result[neibui] == castid) {
-				result[neibuj--] = result[neibui];
-				result[neibui++] = replaceid;
-				buNum++;
-			} else {
-				neibui++;
-			}
-		} // end--for
-		return buNum;
-	}
-	public static int moveData2(int[] result, int end, int buNum, int countThisLunData, int fenmu, int castid, int replaceid,int endIndex) {
-		for (int neibui = end, neibuj = end + fenmu - 1; neibui < endIndex&&neibuj>=endIndex;) {
-			if (buNum >= countThisLunData) {
-				break;
-			}
-			if (result[neibui] == 0 || result[neibui] != castid) {
-				neibui++;
-				continue;
-			}
-			if (result[neibuj] != 0) {
-				neibuj--;
-				continue;
-			}
-			if (result[neibui] == castid) {
-				result[neibuj--] = result[neibui];
-				result[neibui++] = replaceid;
-				buNum++;
-			} else {
-				neibui++;
-			}
-		} // end--for
-		return buNum;
-	}
+//	public static int moveData2(int[] result, int end, int buNum, int countThisLunData, int fenmu, int castid, int replaceid, int endIndex) {
+//		for (int neibui = end, neibuj = end + fenmu - 1; neibui < endIndex && neibuj >= endIndex;) {
+//			if (buNum >= countThisLunData) {
+//				break;
+//			}
+//			if (result[neibui] == 0 || result[neibui] != castid) {
+//				neibui++;
+//				continue;
+//			}
+//			if (result[neibuj] != 0) {
+//				neibuj--;
+//				continue;
+//			}
+//			if (result[neibui] == castid) {
+//				result[neibuj--] = result[neibui];
+//				result[neibui++] = replaceid;
+//				buNum++;
+//			} else {
+//				neibui++;
+//			}
+//		} // end--for
+//		return buNum;
+//	}
+
 	public static void main(String[] args) {
 		/**
 		 * 投放ID,优先级假设已经是按从高到低排列,如下例子：new int[]{ 3, 7, 111
@@ -782,34 +638,33 @@ public class Lunbo {
 		// init16.add(new int[] { 27, 440, 66 });
 		// init16.add(new int[] { 103, 660, 77 });
 		// posCaroNum.put("16", init16);
-//		List<int[]> init17 = new ArrayList<>();
-//		init17.add(new int[] { 13, 84, 11 });
-//		init17.add(new int[] { 31, 204, 22 });
-//		init17.add(new int[] { 37, 238, 33 });
-//		init17.add(new int[] { 55, 357, 44 });
-//		init17.add(new int[] { 73, 476, 55 });
-//		init17.add(new int[] { 37, 476, 66 });
-//		init17.add(new int[] { 109, 714, 77 });
-//		posCaroNum.put("17", init17);
-//		95/396,79/330,43/180,118/495,43/990
-//		List<int[]> init17 = new ArrayList<>();
-//		init17.add(new int[] { 43, 180, 11 });
-//		init17.add(new int[] { 79,330, 22 });
-//		init17.add(new int[] { 95,396, 33 });
-//		init17.add(new int[] { 119,495,44 });
-//		init17.add(new int[] { 41,990, 55 });
-//		posCaroNum.put("17", init17);
-		
-//		List<int[]> init17 = new ArrayList<>();
-//		init17.add(new int[] { 43, 180, 11 });
-//		init17.add(new int[] { 79,330, 22 });
-//		init17.add(new int[] { 95,396, 33 });
-//		init17.add(new int[] { 118,495,44 });
-//		init17.add(new int[] { 43,990, 55 });
-//		posCaroNum.put("17", init17);
-		
+		// List<int[]> init17 = new ArrayList<>();
+		// init17.add(new int[] { 13, 84, 11 });
+		// init17.add(new int[] { 31, 204, 22 });
+		// init17.add(new int[] { 37, 238, 33 });
+		// init17.add(new int[] { 55, 357, 44 });
+		// init17.add(new int[] { 73, 476, 55 });
+		// init17.add(new int[] { 37, 476, 66 });
+		// init17.add(new int[] { 109, 714, 77 });
+		// posCaroNum.put("17", init17);
+		// 95/396,79/330,43/180,118/495,43/990
+		// List<int[]> init17 = new ArrayList<>();
+		// init17.add(new int[] { 43, 180, 11 });
+		// init17.add(new int[] { 79,330, 22 });
+		// init17.add(new int[] { 95,396, 33 });
+		// init17.add(new int[] { 119,495,44 });
+		// init17.add(new int[] { 41,990, 55 });
+		// posCaroNum.put("17", init17);
 
-//		37/238,13/84,55/357,73/476,109/714,31/204,37/476
+		// List<int[]> init17 = new ArrayList<>();
+		// init17.add(new int[] { 43, 180, 11 });
+		// init17.add(new int[] { 79,330, 22 });
+		// init17.add(new int[] { 95,396, 33 });
+		// init17.add(new int[] { 118,495,44 });
+		// init17.add(new int[] { 43,990, 55 });
+		// posCaroNum.put("17", init17);
+
+		// 37/238,13/84,55/357,73/476,109/714,31/204,37/476
 
 		List<int[]> init17 = new ArrayList<>();
 		init17.add(new int[] { 13, 84, 11 });
@@ -820,24 +675,24 @@ public class Lunbo {
 		init17.add(new int[] { 37, 476, 66 });
 		init17.add(new int[] { 109, 714, 77 });
 		posCaroNum.put("17", init17);
-		
-//		353/714,235/476,1/84
-//		List<int[]> init17 = new ArrayList<>();
-//		init17.add(new int[] { 1, 84, 11 });
-//		init17.add(new int[] { 235, 476, 22 });
-//		init17.add(new int[] { 353, 714, 33 });
-//		posCaroNum.put("17", init17);
-		
-//		13/84,55/357,73/476,109/714,31/204,18/119,39/476
-//		List<int[]> init17 = new ArrayList<>();
-//		init17.add(new int[] { 13, 84, 11 });
-//		init17.add(new int[] { 18, 119, 33 });
-//		init17.add(new int[] { 31, 204, 22 });
-//		init17.add(new int[] { 55, 357, 44 });
-//		init17.add(new int[] { 73, 476, 55 });
-//		init17.add(new int[] { 39, 476, 66 });
-//		init17.add(new int[] { 109, 714, 77 });
-//		posCaroNum.put("17", init17);
+
+		// 353/714,235/476,1/84
+		// List<int[]> init17 = new ArrayList<>();
+		// init17.add(new int[] { 1, 84, 11 });
+		// init17.add(new int[] { 235, 476, 22 });
+		// init17.add(new int[] { 353, 714, 33 });
+		// posCaroNum.put("17", init17);
+
+		// 13/84,55/357,73/476,109/714,31/204,18/119,39/476
+		// List<int[]> init17 = new ArrayList<>();
+		// init17.add(new int[] { 13, 84, 11 });
+		// init17.add(new int[] { 18, 119, 33 });
+		// init17.add(new int[] { 31, 204, 22 });
+		// init17.add(new int[] { 55, 357, 44 });
+		// init17.add(new int[] { 73, 476, 55 });
+		// init17.add(new int[] { 39, 476, 66 });
+		// init17.add(new int[] { 109, 714, 77 });
+		// posCaroNum.put("17", init17);
 		Map<String, int[]> castSeq = null;// 最终的投放ID对应的投放序列
 		double start = System.currentTimeMillis();
 		// for (int i = 0; i < 1000; i++) {
@@ -870,9 +725,9 @@ public class Lunbo {
 					}
 					// System.out.print(seq[i] + "("+(i+1)+"),");
 					//
-//					if (seq[i] == 0 && seq[i - 1] != 0) {
-//						System.out.print("(" + (i + 1) + ")");
-//					}
+					// if (seq[i] == 0 && seq[i - 1] != 0) {
+					// System.out.print("(" + (i + 1) + ")");
+					// }
 					System.out.print(seq[i]);
 					System.out.print(",");
 					if ((i + 1) % posCaroNum.get(pos).get(st)[1] == 0 && i != 0) {

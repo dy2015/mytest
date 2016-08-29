@@ -120,7 +120,7 @@ public class LunboUtilTest {
         long strat=System.currentTimeMillis();
 		for(int i =1;i<2000;i++){
 			try{
-//			System.out.println("执行第"+i+"次，========================================");
+			System.out.println("执行第"+i+"次，========================================");
 			int[] arr=new int[i];
 			for(int j=0;j<i;j++){
 				arr[j]=j+1;
