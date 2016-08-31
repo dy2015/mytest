@@ -18,7 +18,9 @@ public class Zhengze {
 		if (m2.find()) {
 			System.out.println("m2-----" + s2);
 		}
-
+		StringBuilder s=new StringBuilder("abdcf");
+		System.out.println(s.replace(3, s.length()-1, "2"));
+		System.out.println(s);
 	}
 
 }

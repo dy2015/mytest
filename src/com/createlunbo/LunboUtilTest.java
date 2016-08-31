@@ -170,6 +170,7 @@ public class LunboUtilTest {
 		}//end-for
 		System.out.println("恭喜你，算法执行结束，测试通过!");
 		System.out.println("算法耗时："+(System.currentTimeMillis()-strat));
+		
 	}
 
 }

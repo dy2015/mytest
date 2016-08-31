@@ -46,6 +46,11 @@ public class Lunbo {
 			if (temp < 0) {
 				lunboData[i][0] = temp + fenzi;
 				lunboData[i][1] = gongbeishu;
+				for (int j = i + 1; j < len; j++) {
+					lunboData[j][0] = 0;
+					lunboData[j][1] = gongbeishu;
+				}
+				break;
 			}
 		}
 		// 按分母从小到大排序
@@ -287,7 +292,7 @@ public class Lunbo {
 									}
 								}
 								endlunData[yidong] = end;
-								buNum = moveData(result, end, buNum, countThisLunData, lunboData[yidong][1], lunboData[yidong][2], lunboData[cyclei][2],-1);
+								buNum = moveData(result, end, buNum, countThisLunData, lunboData[yidong][1], lunboData[yidong][2], lunboData[cyclei][2], -1);
 
 								if (buNum < countThisLunData) {
 									end += lunboData[yidong][1];
@@ -322,7 +327,7 @@ public class Lunbo {
 								end = endlunData[yidong] + lunboData[yidong][1];
 								endlunData[yidong] = end;
 								if (end < j + lunboData[cyclei][1]) {
-									buNum = moveData(result, end, buNum, countThisLunData, lunboData[yidong][1], lunboData[yidong][2], lunboData[cyclei][2],-1);
+									buNum = moveData(result, end, buNum, countThisLunData, lunboData[yidong][1], lunboData[yidong][2], lunboData[cyclei][2], -1);
 								}
 							} // end--for
 							if (buNum < countThisLunData) {
@@ -395,7 +400,7 @@ public class Lunbo {
 				}
 				if (jiangge[jiangeArray] >= indexZero && jiangge[jiangeArray - 1] < indexZero && jiangge[jiangeArray - 1] > start) {
 					// 将该数在该周期内，从前往后，将该数据移动到该周期末尾为零的位置
-					indexZero = moveData(result, jiangge[jiangeArray - 1], buNum, countThisLunData, lunboData[movei][1], lunboData[movei][2], -1,-1);
+					indexZero = moveData(result, jiangge[jiangeArray - 1], buNum, countThisLunData, lunboData[movei][1], lunboData[movei][2], -1, -1);
 				}
 				if (orgin != indexZero) {
 					orgin = indexZero;
@@ -409,7 +414,7 @@ public class Lunbo {
 				break;
 			}
 			if (endlunData[yidong] < start) {
-				buNum = moveData(result, endlunData[yidong], buNum, countThisLunData, lunboData[yidong][1], lunboData[yidong][2], lunboData[cycleIndex][2],-1);
+				buNum = moveData(result, endlunData[yidong], buNum, countThisLunData, lunboData[yidong][1], lunboData[yidong][2], lunboData[cycleIndex][2], -1);
 			}
 		} // end--for
 	}
@@ -448,19 +453,19 @@ public class Lunbo {
 
 	public static int moveData(int[] result, int end, int buNum, int countThisLunData, int fenmu, int castid, int replaceid, int endIndex) {
 		int zero = 0;
-		boolean tag=true;
+		boolean tag = true;
 		for (int neibui = end, neibuj = end + fenmu - 1;;) {
-			if(tag==false){
+			if (tag == false) {
 				break;
 			}
-			 tag=false;
-			if (endIndex==-1) {
+			tag = false;
+			if (endIndex == -1) {
 				if (neibui < neibuj) {
-					tag=true;
+					tag = true;
 				}
-			}else{
-				if ( neibui < endIndex && neibuj >= endIndex) {
-					tag=true;
+			} else {
+				if (neibui < endIndex && neibuj >= endIndex) {
+					tag = true;
 				}
 			}
 			if (tag) {
@@ -509,29 +514,31 @@ public class Lunbo {
 		}
 	}
 
-//	public static int moveData2(int[] result, int end, int buNum, int countThisLunData, int fenmu, int castid, int replaceid, int endIndex) {
-//		for (int neibui = end, neibuj = end + fenmu - 1; neibui < endIndex && neibuj >= endIndex;) {
-//			if (buNum >= countThisLunData) {
-//				break;
-//			}
-//			if (result[neibui] == 0 || result[neibui] != castid) {
-//				neibui++;
-//				continue;
-//			}
-//			if (result[neibuj] != 0) {
-//				neibuj--;
-//				continue;
-//			}
-//			if (result[neibui] == castid) {
-//				result[neibuj--] = result[neibui];
-//				result[neibui++] = replaceid;
-//				buNum++;
-//			} else {
-//				neibui++;
-//			}
-//		} // end--for
-//		return buNum;
-//	}
+	// public static int moveData2(int[] result, int end, int buNum, int
+	// countThisLunData, int fenmu, int castid, int replaceid, int endIndex) {
+	// for (int neibui = end, neibuj = end + fenmu - 1; neibui < endIndex &&
+	// neibuj >= endIndex;) {
+	// if (buNum >= countThisLunData) {
+	// break;
+	// }
+	// if (result[neibui] == 0 || result[neibui] != castid) {
+	// neibui++;
+	// continue;
+	// }
+	// if (result[neibuj] != 0) {
+	// neibuj--;
+	// continue;
+	// }
+	// if (result[neibui] == castid) {
+	// result[neibuj--] = result[neibui];
+	// result[neibui++] = replaceid;
+	// buNum++;
+	// } else {
+	// neibui++;
+	// }
+	// } // end--for
+	// return buNum;
+	// }
 
 	public static void main(String[] args) {
 		/**
@@ -667,13 +674,16 @@ public class Lunbo {
 		// 37/238,13/84,55/357,73/476,109/714,31/204,37/476
 
 		List<int[]> init17 = new ArrayList<>();
-		init17.add(new int[] { 13, 84, 11 });
-		init17.add(new int[] { 31, 204, 22 });
-		init17.add(new int[] { 37, 238, 33 });
-		init17.add(new int[] { 55, 357, 44 });
-		init17.add(new int[] { 73, 476, 55 });
-		init17.add(new int[] { 37, 476, 66 });
-		init17.add(new int[] { 109, 714, 77 });
+		init17.add(new int[] { 1, 10, 11 });
+		init17.add(new int[] { 2, 10, 22 });
+		init17.add(new int[] { 3, 10, 33 });
+		init17.add(new int[] { 4, 10, 44 });
+		init17.add(new int[] { 5, 10, 55 });
+		init17.add(new int[] { 6, 10, 66 });
+		init17.add(new int[] { 7, 10, 77 });
+		init17.add(new int[] { 8, 10, 88 });
+		init17.add(new int[] { 10, 10, 99 });
+
 		posCaroNum.put("17", init17);
 
 		// 353/714,235/476,1/84
