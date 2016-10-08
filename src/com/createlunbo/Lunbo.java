@@ -196,7 +196,7 @@ public class Lunbo {
 				cycle = 1;
 			}
 			// 当有分数分母刚好等于公倍数的，先排除，按最大的分母为周期，执行下面的操作
-			for (int g = 0; g < gongbeishu - len * 0; g += len) {
+			for (int g = 0; g < gongbeishu - len * 1; g += len) {
 				zeroNum = 0;
 				for (int cyclei = 0; cyclei < lun && lunboData[cyclei][0] > 0; cyclei++) {
 					if (cycle % 2 == 0) {
@@ -553,26 +553,27 @@ public class Lunbo {
 		// init1.add(new int[] { 2, 21, 444 });
 		// init1.add(new int[] { 1, 21, 555 });
 		// posCaroNum.put("1", init1);
-		// List<int[]> init2 = new ArrayList<>();
-		// init2.add(new int[] { 3, 5, 111 });
-		// init2.add(new int[] { 1, 3, 222 });
-		// init2.add(new int[] { 1, 15, 333 });
-		// posCaroNum.put("2", init2);
-		// List<int[]> init3 = new ArrayList<>();
-		// init3.add(new int[] { 1, 3, 111 });
-		// init3.add(new int[] { 3, 10, 222 });
-		// init3.add(new int[] { 4, 15, 333 });
-		// init3.add(new int[] { 1, 10, 4444 });
-		// posCaroNum.put("3", init3);
+//		 List<int[]> init2 = new ArrayList<>();
+//		 init2.add(new int[] { 1, 4, 111 });
+//		 init2.add(new int[] { 2, 7, 222 });
+//		 init2.add(new int[] { 1, 11, 333 });
+//		 
+//		 posCaroNum.put("2", init2);
+//		 List<int[]> init3 = new ArrayList<>();
+//		 init3.add(new int[] { 1, 3, 111 });
+//		 init3.add(new int[] { 3, 10, 222 });
+//		 init3.add(new int[] { 4, 15, 333 });
+//		 init3.add(new int[] { 1, 10, 4444 });
+//		 posCaroNum.put("3", init3);
 		//
-		// List<int[]> init4 = new ArrayList<>();
-		// init4.add(new int[] { 5, 21, 111 });
-		// init4.add(new int[] { 3, 14, 222 });
-		// init4.add(new int[] { 4, 21, 333 });
-		// init4.add(new int[] { 1, 6, 444 });
-		// init4.add(new int[] { 1, 7, 555 });
-		// init4.add(new int[] { 1, 21, 666 });
-		// posCaroNum.put("4", init4);
+//		 List<int[]> init4 = new ArrayList<>();
+//		 init4.add(new int[] { 5, 21, 111 });
+//		 init4.add(new int[] { 3, 14, 222 });
+//		 init4.add(new int[] { 4, 21, 333 });
+//		 init4.add(new int[] { 1, 6, 444 });
+//		 init4.add(new int[] { 1, 7, 555 });
+//		 init4.add(new int[] { 1, 21, 666 });
+//		 posCaroNum.put("4", init4);
 		//
 		// List<int[]> init5 = new ArrayList<>();
 		// init5.add(new int[] { 7, 10, 111 });
@@ -663,28 +664,28 @@ public class Lunbo {
 		// init17.add(new int[] { 41,990, 55 });
 		// posCaroNum.put("17", init17);
 
-		// List<int[]> init17 = new ArrayList<>();
-		// init17.add(new int[] { 43, 180, 11 });
-		// init17.add(new int[] { 79,330, 22 });
-		// init17.add(new int[] { 95,396, 33 });
-		// init17.add(new int[] { 118,495,44 });
-		// init17.add(new int[] { 43,990, 55 });
-		// posCaroNum.put("17", init17);
+//		 List<int[]> init17 = new ArrayList<>();
+//		 init17.add(new int[] { 43, 180, 11 });
+//		 init17.add(new int[] { 79,330, 22 });
+//		 init17.add(new int[] { 95,396, 33 });
+//		 init17.add(new int[] { 118,495,44 });
+//		 init17.add(new int[] { 43,990, 55 });
+//		 posCaroNum.put("17", init17);
 
 		// 37/238,13/84,55/357,73/476,109/714,31/204,37/476
 
-		List<int[]> init17 = new ArrayList<>();
-		init17.add(new int[] { 1, 10, 11 });
-		init17.add(new int[] { 2, 10, 22 });
-		init17.add(new int[] { 3, 10, 33 });
-		init17.add(new int[] { 4, 10, 44 });
-		init17.add(new int[] { 5, 10, 55 });
-		init17.add(new int[] { 6, 10, 66 });
-		init17.add(new int[] { 7, 10, 77 });
-		init17.add(new int[] { 8, 10, 88 });
-		init17.add(new int[] { 10, 10, 99 });
-
-		posCaroNum.put("17", init17);
+//		List<int[]> init17 = new ArrayList<>();
+//		init17.add(new int[] { 1, 10, 11 });
+//		init17.add(new int[] { 2, 10, 22 });
+//		init17.add(new int[] { 3, 10, 33 });
+//		init17.add(new int[] { 4, 10, 44 });
+//		init17.add(new int[] { 5, 10, 55 });
+//		init17.add(new int[] { 6, 10, 66 });
+//		init17.add(new int[] { 7, 10, 77 });
+//		init17.add(new int[] { 8, 10, 88 });
+//		init17.add(new int[] { 10, 10, 99 });
+//
+//		posCaroNum.put("17", init17);
 
 		// 353/714,235/476,1/84
 		// List<int[]> init17 = new ArrayList<>();
@@ -694,15 +695,15 @@ public class Lunbo {
 		// posCaroNum.put("17", init17);
 
 		// 13/84,55/357,73/476,109/714,31/204,18/119,39/476
-		// List<int[]> init17 = new ArrayList<>();
-		// init17.add(new int[] { 13, 84, 11 });
-		// init17.add(new int[] { 18, 119, 33 });
-		// init17.add(new int[] { 31, 204, 22 });
-		// init17.add(new int[] { 55, 357, 44 });
-		// init17.add(new int[] { 73, 476, 55 });
-		// init17.add(new int[] { 39, 476, 66 });
-		// init17.add(new int[] { 109, 714, 77 });
-		// posCaroNum.put("17", init17);
+		 List<int[]> init17 = new ArrayList<>();
+		 init17.add(new int[] { 13, 84, 11 });
+		 init17.add(new int[] { 18, 119, 33 });
+		 init17.add(new int[] { 31, 204, 22 });
+		 init17.add(new int[] { 55, 357, 44 });
+		 init17.add(new int[] { 73, 476, 55 });
+		 init17.add(new int[] { 39, 476, 66 });
+		 init17.add(new int[] { 109, 714, 77 });
+		 posCaroNum.put("17", init17);
 		Map<String, int[]> castSeq = null;// 最终的投放ID对应的投放序列
 		double start = System.currentTimeMillis();
 		// for (int i = 0; i < 1000; i++) {
