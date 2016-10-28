@@ -56,7 +56,7 @@ public class AnalyzeNiErSen {
 				System.out.println(str);
 				bulid.append(str);
 			}
-
+			
 			WriteFile.write(writeUrl, bulid.toString());
 
 			System.out.println("不一样的ip数量：" + list.size());

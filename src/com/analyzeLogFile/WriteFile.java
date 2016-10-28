@@ -27,8 +27,7 @@ public class WriteFile {
 			FileOutputStream fos = new FileOutputStream(file);
 			str.append(content);
 			bytes = str.toString().getBytes("UTF-8");
-			int b = str.length();
-			fos.write(bytes, 0, b);
+			fos.write(bytes);
 			fos.close();
 		} catch (IOException e) {
 			System.out.println("写文件失败");

@@ -33,8 +33,9 @@ public class SortMapByValue {
 		map.put("3", 80);
 		map.put("4", 70);
 		List<String> list = sort(map);
-		for (String s : list) {
-			System.out.println(s);
-		}
+		System.out.println(list.toString());
+//		for (String s : list) {
+//			System.out.println(s);
+//		}
 	}
 }
