@@ -25,7 +25,7 @@ public class StatisticsLog {
 		 analyze.init();
 		
 		 // 分析从区域定向IPA，到中间路由remote、xf等中间网关ip,到曝光ip，不一致的情况,从文件中筛选出该数据
-		// analyze.analyzeRout();
+//		 analyze.analyzeRout();
 		// 统计尼尔森的数据
 		analyzeNiErSen.analyze();
 
