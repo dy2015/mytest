@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-public class CutWord {
+public class PhraseCorrection {
 
 	private final static String inputWord = "1.8米电视贵";// 输入的搜索词组
 	private final static String[] standardWord = { "2米", "柜子", "1.8米", "电视", "电视柜" };// 正确的标准词库
