@@ -37,15 +37,15 @@ public class analyzeFileIP {
 		String id = "1417846";
 		String ipUrl = "C://Users//yt//Downloads//ip.txt";
 		String regionIpUrl = "C://Users//yt//Downloads//region.txt";
-		String thirdIpUrl = "C://Users//yt//Downloads//Shen.csv";
+		String thirdIpUrl = "C://Users//yt//Downloads//san.txt";
 		String areaUrl = "C://Users//yt//Downloads//area.txt";
 		analyzeFileIP u = new analyzeFileIP();
 		u.loadIPData(ipUrl, ipMap);
-		u.loadRegionIPData(regionIpUrl, regionIpMap, regionCityIdMap);
-		u.loadAreaData(areaUrl, areaMap);
-		// u.loadThirdIPData(thirdIpUrl);
-		// u.compareIp(ipMap, thirdIpMap);
-		u.updateAreaData(url, id);
+//		u.loadRegionIPData(regionIpUrl, regionIpMap, regionCityIdMap);
+//		u.loadAreaData(areaUrl, areaMap);
+		 u.loadThirdIPData(thirdIpUrl);
+		 u.compareIp(ipMap, thirdIpMap);
+//		u.updateAreaData(url, id);
 	}
 
 	public void loadAreaData(String fileName, Map<String, String> map) {// 加载
@@ -113,8 +113,8 @@ public class analyzeFileIP {
 			reader = new BufferedReader(new FileReader(file));
 			String tempString = null;
 			while ((tempString = reader.readLine()) != null) {// 一次读入一行，直到读入null为文件结束
-				String temp[] = tempString.split(",");
-				thirdIpMap.put(temp[0], temp[1]);
+				String temp[] = tempString.split("\t");
+				thirdIpMap.put(temp[1], temp[2]);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

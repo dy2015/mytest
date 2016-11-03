@@ -23,6 +23,11 @@ public class Analyze {
 	private final static int[][] fileCycle = { { 0, 9 }, { 10, 23 } };// 文件按小时拆分为0-9和10-23
 	private final static int[][] fileNumber ={{41,45,100},{49,56,100},{60,69,100},{31,40,101},{61,70,103}};	
 	
+	public  static long ileageIP = 0;//全部日志中ext(ip)中不满足要求的IP对应的日志条数
+	
+	public  static long leageIP = 0;//占比最大的IP所对应的ext(ip)中满足要求的IP对应的日志条数
+	public  static long isleageIP = 0;//占比最大的IP所对应的ext(ip)中不满足要求的IP对应的日志条数
+	
 	public static Map<String, String> ipMap = new HashMap<String, String>();// 目标地区源文件ip.txt:key=startIp;VALUE=endIp
 	public static Map<String, String> ipCityMap = new HashMap<String, String>();// 目标地区源文件ip.txt:key=startIp;VALUE=endIp
 	public static Map<String, String> regionIpMap = new HashMap<String, String>();// 非目标地区源文件region.txt:key=startIp;VALUE=endIp
@@ -318,13 +323,18 @@ public class Analyze {
 			}
 			System.out.println("发生漂移IP中，占比最大的IP,按app版本的总曝光量:" + otherNum);
 			/******************************************************************************/
-			System.out.println("发生漂移IP中，占比最大的IP,对应日志中ext的ip:");
+			System.out.println("发生漂移IP中，占比最大的IP,对应日志中ext的ip:(ext条数："+piaoyiMaxExtIpSet.size()+")");
 			boolean notTag = false;
 			for (String s : piaoyiMaxExtIpSet) {
+				 if(s.length() <7||s.length() >15){
+					 isleageIP++;
+						continue;
+					}
 				notTag = false;
 				for (String key : ipMap.keySet()) {
 					try{
 					if (IpUtil.ipExistsInRange(s, key + "-" + ipMap.get(key))) {
+						leageIP++;
 						notTag = true;
 						break;
 					} // end--if
@@ -335,6 +345,9 @@ public class Analyze {
 				System.out.println(s + " --> 是否属于投放目标地区ip：" + notTag);
 			} // end--for
 		} // end--if
+		System.out.println("占比最大的IP所对应的ext(ip)中满足要求的IP对应的日志条数：" + leageIP);
+		System.out.println("占比最大的IP所对应的ext(ip)中不满足要求的IP对应的日志条数：" + isleageIP);
+		System.out.println("全部日志中ext(ip)中不满足要求的IP对应的日志条数：" + ileageIP);
 	}//end--print
 	
 	public void printAccess() {

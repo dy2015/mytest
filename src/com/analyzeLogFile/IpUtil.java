@@ -22,7 +22,10 @@ public class IpUtil {
      */
 
    public static boolean ipExistsInRange(String ip,String ipSection) {
-
+	   if(ip.length() <7||ip.length() >15){
+		   Analyze.ileageIP++;
+			return false;
+		}
         ipSection = ipSection.trim();
 
         ip = ip.trim();

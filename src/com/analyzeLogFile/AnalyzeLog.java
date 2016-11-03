@@ -24,8 +24,8 @@ public class AnalyzeLog {
 					continue;
 				}
 				if (castId.equals(temp[3])) {
-					String[] tempIpSet1 = temp[temp.length - 1].split(",");
-					String[] tempIpSet2 = tempIpSet1[tempIpSet1.length - 1].split(":");
+					String[] tempIpSet1 = temp[temp.length - 1].split(";");
+					String[] tempIpSet2 = tempIpSet1[tempIpSet1.length - 4].split(":");
 					ipAndExtIpMap.put(temp[2], tempIpSet2[tempIpSet2.length - 1]);
 					if (piaoyiMaxIp != null) {// analyzebyApp
 						for (int i = 0; i < piaoyiMaxIp.length; i++) {
@@ -101,27 +101,27 @@ public class AnalyzeLog {
 					System.out.println("number=" + number);
 					continue;
 				}
-				String[] ispTemp1=temp[temp.length-1].split(";");
-				String[] ispTemp2=ispTemp1[ispTemp1.length-2].split(":");
-				String isp=ispTemp2[1];
-				if(!"CMCC".equals(isp)){//过滤非isp！=CMCC的统计
-					continue;
-				}
-				
+//				String[] ispTemp1=temp[temp.length-1].split(";");
+//				String[] ispTemp2=ispTemp1[ispTemp1.length-2].split(":");
+//				String isp=ispTemp2[1];
+//				if(!"CMCC".equals(isp)){//过滤非isp！=CMCC的统计
+//					continue;
+//				}
+//				
 				String[] ideaList= temp[10].split(",");
-				if (ideaList.length > 2) {
-					StatisticsLog.ideaCount++;
-					System.out.println("出现了数量大于两个的素材");//正常是只有一个素材和一个空字符串的两个长度的情况
-					continue;
-				}
+//				if (ideaList.length > 2) {
+//					StatisticsLog.ideaCount++;
+//					System.out.println("出现了数量大于两个的素材");//正常是只有一个素材和一个空字符串的两个长度的情况
+//					continue;
+//				}
 				
 				if (ideaID != null) {//按指定素材id统计
-					if(ideaList.length==2){
-						if (ideaID.equals(ideaList[0])) {
+						for(String idea:ideaList){
+						if (ideaID.equals(idea)) {
 							access(temp[2], ipMap, ipCityMap, accessMap, null,null);
 							break;
 						} // end--if
-					}// end--if
+						}
 				} else {// 不按指定素材id统计
 					if (tag) {// 进行按素材分类，进行统计某地区的容量
 						String key="";
@@ -138,9 +138,8 @@ public class AnalyzeLog {
 			}
 			reader.close();
 		} catch (Exception e) {
-			System.out.println(fileName);
 			e.printStackTrace();
-			System.out.println("解析文件失败");
+			System.out.println("解析文件失败:"+fileName);
 		}
 	}
 
