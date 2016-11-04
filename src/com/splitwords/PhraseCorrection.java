@@ -10,43 +10,6 @@ import java.util.Set;
 
 public class PhraseCorrection {
 
-	private final static String inputWord = "6米电集鬼";// 输入的搜索词组
-	private final static String[] standardWord = { "3米", "1.9", "2米", "柜子", "点事归","电视机", "1.6米", "电脑柜", "电脑桌", "电脑", "笔记本电脑", "电冰箱", "电视桌", "电视", "电视柜","电视归",  "1.8", "米" };// 正确的标准词库
-	private final static Map<String, String> inputWordMap = new HashMap<>();// 输入的搜索词组
-	private final static Map<String, String> standardWordMap = new HashMap<>();// 正确的标准词库
-	static {
-		inputWordMap.put(inputWord, "liumidianjigui");
-		standardWordMap.put("3米", "sanmi");
-		standardWordMap.put("1.9", "yidianjiu");
-		standardWordMap.put("2米", "liangmi");
-		standardWordMap.put("柜子", "guizi");
-		standardWordMap.put("点事归", "dianshigui");
-		standardWordMap.put("电视归", "dianshigui");
-		standardWordMap.put("电视机", "dianshiji");
-		standardWordMap.put("1.6米", "yidianliumi");
-		standardWordMap.put("电脑柜", "diannaogui");
-		standardWordMap.put("电脑桌", "diannaozhuo");
-		standardWordMap.put("电脑", "diannao");
-		standardWordMap.put("笔记本电脑", "bijibendiannao");
-		standardWordMap.put("电冰箱", "dianbingxiang");
-		standardWordMap.put("电视桌", "dianshizhuo");
-		standardWordMap.put("电视", "dianshi");
-		standardWordMap.put("电视柜", "dianshigui");
-		standardWordMap.put("1.8", "yidianba");
-		standardWordMap.put("米", "mi");
-	}
-
-	public static void main(String[] args) {
-		for (String key : inputWordMap.keySet()) {
-			String[] result = start(key, standardWord, inputWordMap, standardWordMap);
-			System.out.println("输入的搜索词组：" + key);
-			System.out.println("===========================");
-			for (int i = 0; i < result.length; i++) {
-				System.out.println("纠错后的推荐词组：(第" + (i+1) + "位)：" + result[i]);
-			}
-		}
-	}
-
 	/**
 	 * ============================词组纠错开始
 	 * @param word 输入的汉字词组
@@ -55,16 +18,16 @@ public class PhraseCorrection {
 	 * @param standardWordMap 标准词库对应的拼音
 	 * @return
 	 */
-	private static String[] start(String word, String[] input, Map<String, String> inputWordMap, Map<String, String> standardWordMap) {
+	public static String[] start(String word, String[] input, Map<String, String> inputWordMap, String[] standardWord, Map<String, String> standardWordMap) {
 		String[] newInput = cut(word);// 拆词，并组合新的搜索词组
 //		for (String s : newInput) {
 //			System.out.println(s);
 //		}
-		newInput = match(inputWordMap, standardWordMap, newInput);// 匹配，纠错
-//		for (String s : newInput) {
+		String[] newMach = match(inputWordMap, standardWordMap, newInput,standardWord);// 匹配，纠错
+//		for (String s : newMach) {
 //			System.out.println(s);
 //		}
-		newInput = combination(inputWordMap, standardWordMap, newInput);// 纠错后的词组，重新组合
+		newInput = combination(inputWordMap, standardWordMap, newMach,newInput);// 纠错后的词组，重新组合
 		return newInput;
 	}
 
@@ -109,7 +72,7 @@ public class PhraseCorrection {
 	 * @param input 输入新组合的词语
 	 * @return result 返回纠错后的词组
 	 */
-	private static String[] match(Map<String, String> inputWordMap, Map<String, String> standardWordMap, String[] input) {
+	private static String[] match(Map<String, String> inputWordMap, Map<String, String> standardWordMap, String[] input, String[] standardWord) {
 		Set<String> set = new HashSet<>();
 		for (int i = 0; i < input.length; i++) {
 			String[] newInput = cut(input[i]);
@@ -153,21 +116,38 @@ public class PhraseCorrection {
 	 * @param input 输入新组合的词语
 	 * @return result 返回纠错后的词组
 	 */
-	private static String[] combination(Map<String, String> inputWordMap, Map<String, String> standardWordMap, String[] input) {
+	private static String[] combination(Map<String, String> inputWordMap, Map<String, String> standardWordMap, String[] input, String[] newInput) {
 		boolean tag = true;
 		List<String> list = new ArrayList<>();
 		String result = "";
 		String resultPinyYin = "";
+		String tempOld ="";
 		String temp ="";
 		for (String key : inputWordMap.keySet()) {
-			temp = key;
+			tempOld = key;
+			temp=key;
 			resultPinyYin = inputWordMap.get(key);
 			for (String s : input) {
-				
+				if (key.indexOf(s) == 0) {
+					list.add(s);
+				}
+			}
+			for (String s : input) {
 				if (key.indexOf(s) == 0) {
 					result += s;
 					resultPinyYin = resultPinyYin.substring(standardWordMap.get(s).length());
 					key = key.substring(s.length());
+				}else{
+					if (key.length() > 0) {
+						if (s.substring(0, 1).equals(key.substring(0, 1))) {
+							result = s;
+							if (standardWordMap.get(s).length() <= resultPinyYin.length()) {
+								resultPinyYin = resultPinyYin.substring(standardWordMap.get(s).length());
+								key = key.substring(s.length());
+							}
+							list.add(result);
+						}
+					}
 				}
 				if (s.length() == key.length()) {
 					if (resultPinyYin.contains(standardWordMap.get(s))) {
@@ -200,7 +180,7 @@ public class PhraseCorrection {
 			String tempStr = "";
 			int count=0;
 			while (tempStr.length() < temp.length()) {
-				if("".equals(tempStr)){
+				if ("".equals(tempStr)) {
 					tempStr = list.get(size - 1);
 				}
 				temp = temp.substring(tempStr.length());
@@ -210,12 +190,12 @@ public class PhraseCorrection {
 							list.add(tempStr + str);
 						}
 					} // end--for
-				}else{
-					list.remove(size-1);
+				} else {
+					list.remove(size - 1);
 				}
-				int tempSize=list.size();
+				int tempSize = list.size();
 				for (String str : input) {
-					if (temp.indexOf(str.substring(0,1)) == 0) {
+					if (temp.indexOf(str.substring(0, 1)) == 0) {
 						continue;
 					}
 					String[] ss = cut(str);
@@ -230,15 +210,67 @@ public class PhraseCorrection {
 						}
 					}
 				} // end--for
-				size = tempSize*count+2;
-				tempStr = list.get(size-1);
-				count++;
+				if (list.size() > 0) {
+					if (tempSize > 1) {
+						size = tempSize * count + 2;
+					} else {
+						size = tempSize;
+						if (size < 1) {
+							size = 1;
+						}
+					}
+					if (size > temp.length()) {
+						break;
+					}
+					tempStr = list.get(size - 1);
+					count++;
+				} else {
+					break;
+				}
 			} // end--while
 		}
-		size = list.size();
+		/**如果汉字纠错后长度达不到输入词组的长度，则按拼音纠错，推荐出拼音类似的词组出来，直到全部找出拼音类似的词组**/
+		String tempPinYin="";
+		if(list.size()>0){
+			tempPinYin=PinYinUtil.CN2Spell(tempOld.substring(list.get(0).length()));
+			for(String key:standardWordMap.keySet()){
+				if(standardWordMap.get(key).equals(tempPinYin)){
+					list.add(list.get(0)+key);
+				}
+			}
+		}else{
+			for (int i = newInput.length - 1; i >= 0; i--) {
+				tempPinYin = PinYinUtil.CN2Spell(newInput[i]);
+				for (String key : standardWordMap.keySet()) {
+					if (tempPinYin.indexOf(standardWordMap.get(key))==0) {
+						list.add(key);
+					}
+				}
+				for (String key : standardWordMap.keySet()) {
+					if (standardWordMap.get(key).equals(tempPinYin)) {
+						if (key.length() < tempOld.length()) {
+							if (list.size() > 0&&!list.get(0).equals(key)) {
+								list.add(list.get(0) + key);
+							}
+						}
+						list.add(key);
+					}
+				}
+			}//end--for
+		}
+		
+		/** 拼音纠错结束 *******/
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		for (String s : list) {
+			if (s.length() <= tempOld.length()) {
+				map.put(s, s.length());
+			}
+		}
+		List<String> resultList = SortMapByValue.sort(map);
+		size = resultList.size();
 		String[] resultStr = new String[size];
 		for (int i = 0; i < size; i++) {
-			resultStr[i] = list.get(i);
+			resultStr[i] = resultList.get(i);
 		}
 		return resultStr;
 	}
