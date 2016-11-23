@@ -1,11 +1,16 @@
 package com;
 
+import java.io.IOException;
+
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
+
 public class DyTest {
 	private static boolean flag;
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		System.out.println("========================================");
 		System.out.println("flag:"+flag);
-		deffience();
+//		deffience();
 		System.out.println("+++++++++++++++++++++++++++++++++++++++++++");
 		// replace();
 		// zhengze();
@@ -13,6 +18,12 @@ public class DyTest {
 		// replaceTest();
 		// javaGetIp();
 //		System.out.println(new Random().nextInt(100));
+		
+		BASE64Encoder encoder=new  BASE64Encoder();
+		String str=encoder.encodeBuffer("182".getBytes());
+		System.out.println(str);
+		System.out.println(new String(new BASE64Decoder().decodeBuffer(str))); 
+		
 	}
 
 	public static void deffience() {
