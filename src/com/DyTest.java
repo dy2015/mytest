@@ -1,13 +1,8 @@
 package com;
 
-import java.io.IOException;
-
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
-
 public class DyTest {
 	private static boolean flag;
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args){
 		System.out.println("========================================");
 		System.out.println("flag:"+flag);
 //		deffience();
@@ -18,12 +13,12 @@ public class DyTest {
 		// replaceTest();
 		// javaGetIp();
 //		System.out.println(new Random().nextInt(100));
-		
-		BASE64Encoder encoder=new  BASE64Encoder();
-		String str=encoder.encodeBuffer("182".getBytes());
-		System.out.println(str);
-		System.out.println(new String(new BASE64Decoder().decodeBuffer(str))); 
-		
+		try {
+			Student student = new Student();
+			student.setFlag(1 == 3);
+		} catch (Exception e) {
+			System.out.println(e);
+		}	
 	}
 
 	public static void deffience() {
@@ -45,3 +40,4 @@ public class DyTest {
 	}
 
 }
+

@@ -7,6 +7,11 @@ public class Student {
 	private int age;
 	private int tag;
 	private Map<String, Integer> prioritySeq;
+	private boolean flag;
+
+	public Student() {
+		super();
+	}
 
 	public Student(String name, int age, int tag) {
 		this.name = name;
@@ -49,6 +54,14 @@ public class Student {
 	@Override
 	public String toString() {
 		return "Student [name=" + name + ", age=" + age + ", tag=" + tag + ", prioritySeq=" + prioritySeq + "]";
+	}
+
+	public boolean isFlag() {
+		return flag;
+	}
+
+	public void setFlag(boolean flag) {
+		this.flag = flag;
 	}
 
 }
