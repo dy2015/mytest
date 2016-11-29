@@ -5,12 +5,13 @@ import java.util.Date;
 
 public class CommonTest {
 	private int i;
-
+	private static boolean flag;
 	public void test() {
 		System.out.println(i);
 	}
 
 	public static void main(String[] args) {
+		System.out.println("flag:"+flag);
 		String ss = "function svdsp_clk() {}#_SS_#<div></div>";
 		String[] aa = ss.split("#_SS_#");
 		System.out.println(aa.length);
