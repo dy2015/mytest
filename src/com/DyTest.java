@@ -3,6 +3,8 @@ package com;
 public class DyTest {
 	private static boolean flag;
 	public static void main(String[] args){
+		String sss="322,320,324,346,325,323,321,327,345,340,341,344,342,343,1421835827,1425020640,1427883541,1433218285,1435125689,1436945825,1436945894,1441874967,1463562019";
+		System.out.println("长度:"+sss.length());
 		System.out.println("========================================");
 		System.out.println("flag:"+flag);
 //		deffience();
