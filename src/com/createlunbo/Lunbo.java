@@ -196,7 +196,7 @@ public class Lunbo {
 				cycle = 1;
 			}
 			// 当有分数分母刚好等于公倍数的，先排除，按最大的分母为周期，执行下面的操作
-			for (int g = 0; g < gongbeishu - len * 1; g += len) {
+			for (int g = 0; g < gongbeishu - len * 0; g += len) {
 				zeroNum = 0;
 				for (int cyclei = 0; cyclei < lun && lunboData[cyclei][0] > 0; cyclei++) {
 					if (cycle % 2 == 0) {
@@ -696,13 +696,13 @@ public class Lunbo {
 
 		// 13/84,55/357,73/476,109/714,31/204,18/119,39/476
 		 List<int[]> init17 = new ArrayList<>();
-		 init17.add(new int[] { 13, 84, 11 });
-		 init17.add(new int[] { 18, 119, 33 });
-		 init17.add(new int[] { 31, 204, 22 });
-		 init17.add(new int[] { 55, 357, 44 });
-		 init17.add(new int[] { 73, 476, 55 });
-		 init17.add(new int[] { 39, 476, 66 });
-		 init17.add(new int[] { 109, 714, 77 });
+		 init17.add(new int[] { 13, 84, 1 });
+		 init17.add(new int[] { 18, 119, 3 });
+		 init17.add(new int[] { 31, 204, 2 });
+		 init17.add(new int[] { 55, 357, 4 });
+		 init17.add(new int[] { 73, 476, 5 });
+		 init17.add(new int[] { 39, 476, 6 });
+		 init17.add(new int[] { 109, 714, 7 });
 		 posCaroNum.put("17", init17);
 		Map<String, int[]> castSeq = null;// 最终的投放ID对应的投放序列
 		double start = System.currentTimeMillis();

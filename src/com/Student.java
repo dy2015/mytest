@@ -51,11 +51,6 @@ public class Student {
 		this.prioritySeq = prioritySeq;
 	}
 
-	@Override
-	public String toString() {
-		return "Student [name=" + name + ", age=" + age + ", tag=" + tag + ", prioritySeq=" + prioritySeq + "]";
-	}
-
 	public boolean isFlag() {
 		return flag;
 	}
@@ -64,4 +59,24 @@ public class Student {
 		this.flag = flag;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		Student po = (Student) obj;
+		if (this.name.equals(po.getName())) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean compareTo(Student s) {
+		if (this.name.equals(s.getName())) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public String toString() {
+		return "Student [name=" + name + ", age=" + age + ", tag=" + tag + ", prioritySeq=" + prioritySeq + ", flag=" + flag + "]";
+	}
 }

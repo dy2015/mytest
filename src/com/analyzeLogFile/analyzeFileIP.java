@@ -42,7 +42,7 @@ public class analyzeFileIP {
 		analyzeFileIP u = new analyzeFileIP();
 		u.loadIPData(ipUrl, ipMap);
 //		u.loadRegionIPData(regionIpUrl, regionIpMap, regionCityIdMap);
-//		u.loadAreaData(areaUrl, areaMap);
+		u.loadAreaData(areaUrl, areaMap);
 		 u.loadThirdIPData(thirdIpUrl);
 		 u.compareIp(ipMap, thirdIpMap);
 //		u.updateAreaData(url, id);

@@ -10,20 +10,21 @@ import java.text.DecimalFormat;
 public class castyouxianji {
 	private final static DecimalFormat df = new DecimalFormat("######0.0000");
 	private final static String url = "G://";
-	private final static String ipUrl = url + "3.txt";
+	private final static String ipUrl = url + "1.txt";
 	private final static String url2 = url + "2.txt";
 
 	public static void main(String[] args) {
 		try {
 			File file = new File(ipUrl);
 			BufferedReader reader = new BufferedReader(new FileReader(file));
+			String result = "";
 			String tempString = null;
 			int count = 0;
 			while ((tempString = reader.readLine()) != null) {// 一次读入一行，直到读入null为文件结束
 				count++;
 				// tempString = tempString.replace("\t", ",");
 				// tempString=tempString.replace("|", "\t");
-				String str[] = tempString.split(",");
+//				String str[] = tempString.split(",");
 				if (tempString == null || "".equals(tempString)) {
 					System.out.println(tempString);
 				}
@@ -32,13 +33,18 @@ public class castyouxianji {
 				// Integer.valueOf(str[1])) * 100.0) / Integer.valueOf(str[0]);
 				// System.out.println(df.format(s));
 				// System.out.println(str[i+1]);
-
-				String temp = "insert into blacklist(type,value) values(\"ip\",\"" + tempString + "\");";
+				result+=tempString+",";
+//				if(count%200==0){
+//					System.out.println(result);
+//					result = "";
+//				}
+				
 				// System.out.println(temp);
-				write(url2, temp);
+//				write(url2, temp);
 				Thread.sleep(5);
 			}
 			System.out.println("count=" + count);
+			System.out.println(result);
 			reader.close();
 		} catch (Exception e) {
 			e.printStackTrace();
