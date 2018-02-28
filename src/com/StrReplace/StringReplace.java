@@ -106,64 +106,67 @@ public class StringReplace {
 	}
 
 	public static void main(String[] args) {
-		int num = 100000;
-		 String str ="http://yktd.m.cn.miaozhen.com/r/k=2027285&p=738xv&dx=__IPDX__&rt=2&ns=127.0.0.1&ni=__IESID__&v=__LOC__&xa=__ADPLATFORM__&mo=__OS__&m0=__OPENUDID__&m0a=__DUID__&m1=__ANDROIDID1__&m1a=__ANDROIDID__&m2=__IMEI__&m4=__AAID__&m5=__IDFA__&m6=__MAC1__&m6a=__MAC__&nd=YT_421185143&np=__POS__&nn=web&nc=__NAME__&nf=__FLL__&ne=__SLL__&o=http://sale.jd.com/act/SkNbG4sQMvUejVW.html";
-//		String str = "http://yktd.m.cn.miaozhen.&ni=__IESID__&ni=__IESID__&ni=__IESID__&ni=__IESID__&ni=__IESID__";
+		int num = 1000;
+		String str = "http://yktd.m.cn.miaozhen.com/r/k=2027285&p=738xv&dx=__IPDX__&rt=2&ns=127.0.0.1&ni=__IESID__&v=__LOC__&xa=__ADPLATFORM__&mo=__OS__&m0=__OPENUDID__&m0a=__DUID__&m1=__ANDROIDID1__&m1a=__ANDROIDID__";
+		// String str =
+		// "http://yktd.m.cn.miaozhen.&ni=__IESID__&ni=__IESID__&ni=__IESID__&ni=__IESID__&ni=__IESID__";
 		System.out.println("len=" + str.length());
-		String target = "__IESID__";
+		String target = "__LOC__";
 		String replaceStr = "123";
 		System.out.println("原始串:");
 		System.out.println(str);
-		System.out.println("================replaceAll:=======================");
-		long start = System.currentTimeMillis();
-		for (int i = 0; i < num; i++) {
-			replaceAllStr(str, target, replaceStr);
-		}
-		System.out.println("新方法1耗时：" + (System.currentTimeMillis() - start));
-		System.out.println(replaceAllStr(str, target, replaceStr));
+		for (int hi = 0; hi < 100; hi++) {
+			System.out.println("================replaceAll:=======================");
+			long start = System.currentTimeMillis();
+			for (int i = 0; i < num; i++) {
+				replaceAllStr(str, target, replaceStr);
+			}
+			System.out.println("新方法1耗时：" + (System.currentTimeMillis() - start));
+			System.out.println(replaceAllStr(str, target, replaceStr));
 
-		start = System.currentTimeMillis();
-		for (int i = 0; i < num; i++) {
-			replaceAllStr2(str, target, replaceStr);
-		}
-		System.out.println("新方法2耗时：" + (System.currentTimeMillis() - start));
-		System.out.println(replaceAllStr2(str, target, replaceStr));
+			start = System.currentTimeMillis();
+			for (int i = 0; i < num; i++) {
+				replaceAllStr2(str, target, replaceStr);
+			}
+			System.out.println("新方法2耗时：" + (System.currentTimeMillis() - start));
+			System.out.println(replaceAllStr2(str, target, replaceStr));
 
-		start = System.currentTimeMillis();
-		for (int i = 0; i < num; i++) {
-			str.replaceAll(target, replaceStr);
-		}
-		System.out.println("老方法耗时：" + (System.currentTimeMillis() - start));
-		System.out.println(str.replaceAll(target, replaceStr));
+			start = System.currentTimeMillis();
+			for (int i = 0; i < num; i++) {
+				str.replaceAll(target, replaceStr);
+			}
+			System.out.println("老方法耗时：" + (System.currentTimeMillis() - start));
+			System.out.println(str.replaceAll(target, replaceStr));
 
-		System.out.println("================replace:===========================");
-		start = System.currentTimeMillis();
-		for (int i = 0; i < num; i++) {
-			str.replace(target, replaceStr);
-		}
-		System.out.println("老方法耗时：" + (System.currentTimeMillis() - start));
-		System.out.println(str.replace(target, replaceStr));
-		
-		System.out.println("================replace first:===========================");
-		start = System.currentTimeMillis();
-		for (int i = 0; i < num; i++) {
-			replaceStr(str, target, "?");
-		}
-		System.out.println("新方法1耗时：" + (System.currentTimeMillis() - start));
-		System.out.println(replaceStr(str, target, replaceStr));
+			System.out.println("================replace:===========================");
+			start = System.currentTimeMillis();
+			for (int i = 0; i < num; i++) {
+				str.replace(target, replaceStr);
+			}
+			System.out.println("老方法耗时：" + (System.currentTimeMillis() - start));
+			System.out.println(str.replace(target, replaceStr));
 
-		start = System.currentTimeMillis();
-		for (int i = 0; i < num; i++) {
-			replaceStr2(str, target, "?");
-		}
-		System.out.println("新方法2耗时：" + (System.currentTimeMillis() - start));
-		System.out.println(replaceStr2(str, target, replaceStr));
-		
-		start = System.currentTimeMillis();
-		for (int i = 0; i < num; i++) {
-			str.replaceFirst(target, replaceStr);
-		}
-		System.out.println("老方法耗时：" + (System.currentTimeMillis() - start));
-		System.out.println(str.replaceFirst(target, replaceStr));
+			System.out.println("================replace first:===========================");
+			start = System.currentTimeMillis();
+			for (int i = 0; i < num; i++) {
+				replaceStr(str, target, "?");
+			}
+			System.out.println("新方法1耗时：" + (System.currentTimeMillis() - start));
+			System.out.println(replaceStr(str, target, replaceStr));
+
+			start = System.currentTimeMillis();
+			for (int i = 0; i < num; i++) {
+				replaceStr2(str, target, "?");
+			}
+			System.out.println("新方法2耗时：" + (System.currentTimeMillis() - start));
+			System.out.println(replaceStr2(str, target, replaceStr));
+			System.out.println("str="+str);
+			start = System.currentTimeMillis();
+			for (int i = 0; i < num; i++) {
+				str.replaceFirst(target, replaceStr);
+			}
+			System.out.println("老方法耗时：" + (System.currentTimeMillis() - start));
+			System.out.println(str.replaceFirst(target, replaceStr));
+		}//end--for
 	}
 }
