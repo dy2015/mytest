@@ -3,11 +3,11 @@ package com.mutilThread;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Thread1 implements Runnable {
+public class Thread5 extends Thread {
 
 	private String key = null;
 
-	public Thread1(String key) {
+	public Thread5(String key) {
 		super();
 		this.key = key;
 	}
@@ -21,10 +21,16 @@ public class Thread1 implements Runnable {
 			condition.put("b", "234");
 			condition.put("test", key);
 			System.out.println("========================================");
-			for (String key : condition.keySet()) {
-				System.out.println("key:" + key + ";value:" + condition.get(key));
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			System.out.println("========================================");
+//			for (String key : condition.keySet()) {
+//				System.out.println("key:" + key + ";value:" + condition.get(key));
+//			}
+//			System.out.println("========================================");
 		}
 		// while (i < Common.MAX) {
 		// Common.getResult();
